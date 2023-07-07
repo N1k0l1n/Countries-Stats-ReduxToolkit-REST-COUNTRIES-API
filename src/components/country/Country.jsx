@@ -1,66 +1,60 @@
 import "./country.css";
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { showAllCountries } from "../../app/features/countries/countriesAction";
-import { reset } from "../../app/features/countries/countriesSlice";
 
 const Country = () => {
-  const { countriesData, loading, success, error } = useSelector(
+  const { countriesData, loading, error } = useSelector(
     (state) => state.country
   );
   const dispatch = useDispatch();
-  const [countryData, setCountryData] = React.useState([]);
+  const [countryData, setCountryData] = useState([]);
 
-  React.useEffect(() => {
-    dispatch(showAllCountries);
+  useEffect(() => {
+    dispatch(showAllCountries());
+  }, [dispatch]);
 
-    if (success) {
+  useEffect(() => {
+    if (countriesData.length > 0) {
       setCountryData(countriesData);
+      console.log(countriesData);
     }
+  }, [countriesData]);
 
-    if (error) {
-      console.log(error);
-    }
-  }, [dispatch, error, success]);
+  console.log(countriesData);
 
   return (
     <section className="country-container">
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        countryData.length > 0 &&
-        countryData.map((item, index) => {
-          return (
-            <div className="country-card" key={index}>
-              <img
-                src={item.flags.png}
-                alt={item.flags.alt}
-                className="country-image"
-              />
-              <div className="country-content">
-                <h3></h3>
-                <p>
-                  Population: <span></span>
-                </p>
-                <p>
-                  Region: <span></span>
-                </p>
-                <p>
-                  Capital: <span></span>
-                </p>
-              </div>
+        countryData.map((item, index) => (
+          <div className="country-card" key={index}>
+            <img
+              src={item.flags.png}
+              alt={item.flags.alt}
+              className="country-image"
+            />
+            <div className="country-content">
+              <h3>{item.name.common}</h3>
+              <p>
+                Population: <span>{item.population}</span>
+              </p>
+              <p>
+                Region: <span>{item.region}</span>
+              </p>
+              <p>
+                Capital: <span>{item.capital}</span>
+              </p>
             </div>
-          );
-        })
+          </div>
+        ))
       )}
-      <div
-        // onClick={() => dispatch(searchByName(item.cioc.toLowerCase()))}
-        className="country-card"
-        key=""
-      >
+      {/* Additional code for the empty country card */}
+      <div className="country-card">
         <img src="#" alt="" className="country-image" />
         <div className="country-content">
-          <h3> </h3>
+          <h3></h3>
           <p>
             Population: <span></span>
           </p>

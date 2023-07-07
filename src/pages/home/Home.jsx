@@ -7,8 +7,8 @@ const Home = () => {
   return (
     <section className="home-page-container">
       <div className="input-container">
-        <Search />
-        <Filter />
+        {/* <Search />
+        <Filter /> */}
       </div>
       <Country />
     </section>
