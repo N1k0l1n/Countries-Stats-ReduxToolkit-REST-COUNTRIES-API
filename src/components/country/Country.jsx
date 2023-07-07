@@ -2,6 +2,7 @@ import "./country.css";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { showAllCountries } from "../../app/features/countries/countriesAction";
+import Spinner from '../../assets/spinner/Spinner'
 
 const Country = () => {
   const { countriesData, loading, error, success } = useSelector(
@@ -26,7 +27,7 @@ const Country = () => {
   return (
     <section className="country-container">
       {loading ? (
-        <h1>Loading...</h1>
+        <Spinner/>
       ) : (
         countryData.map((item, index) => (
           <div className="country-card" key={index}>
