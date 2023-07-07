@@ -45,7 +45,7 @@ const Country = () => {
         <Spinner />
       ) : (
         currentCountries.map((item, index) => (
-          <Link className="country-card" key={index}>
+          <Link className="country-card" key={index} to ={`/${item.cioc}`}>
             <img
               src={item.flags.png}
               alt={item.flags.alt}
@@ -90,5 +90,6 @@ const Country = () => {
     </section>
   );
 };
+
 
 export default Country;

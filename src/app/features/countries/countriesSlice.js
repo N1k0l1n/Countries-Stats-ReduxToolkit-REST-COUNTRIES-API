@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { showAllCountries } from "./countriesAction";
+import { showAllCountries, searchByCode } from "./countriesAction";
 
 const initialState = {
   loading: false,
   countriesData: [],
-  countryData: [],
+  countrySearched: [],
   error: false,
   success: false,
   message: "",
@@ -36,7 +36,21 @@ export const countriesSlice = createSlice({
         state.error = true;
         state.message = action.payload;
         state.countriesData = [];
-      });
+      })
+      .addCase(searchByCode.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(searchByCode.fulfilled, (state, action) => {
+        state.loading = true;
+        state.countrySearched = action.payload;
+        state.success = true;
+      })
+      .addCase(searchByCode.rejected, (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+        state.error = true;
+        state.countrySearched = [];
+      })
   },
 });
 
