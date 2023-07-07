@@ -3,7 +3,23 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+//Route
 import { BrowserRouter } from "react-router-dom";
+
+//Redux
+import { Provider } from "react-redux";
+import {store} from "./app/store/store";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

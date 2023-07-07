@@ -5,11 +5,11 @@ import Header from "./components/header/Header";
 import Home from "./pages/home/Home";
 import CountryDetails from "./pages/country-detail/CountryDetails";
 
-function App() {
+const App = () => {
   return (
-    <main className="App">
+    <main className="main-container">
+      <Header/>
       <Routes>
-        <Route exact path="/" element={<Header />} />
         <Route index element={<Home />} />
         <Route path="/:code" element={<CountryDetails />} />
       </Routes>
