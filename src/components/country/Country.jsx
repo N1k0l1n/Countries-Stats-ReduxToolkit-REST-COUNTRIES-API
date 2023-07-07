@@ -4,24 +4,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { showAllCountries } from "../../app/features/countries/countriesAction";
 
 const Country = () => {
-  const { countriesData, loading, error } = useSelector(
+  const { countriesData, loading, error, success } = useSelector(
     (state) => state.country
   );
   const dispatch = useDispatch();
   const [countryData, setCountryData] = useState([]);
 
   useEffect(() => {
-    dispatch(showAllCountries());
-  }, [dispatch]);
+    dispatch(showAllCountries()).then(() => {
+      if (success) {
+        setCountryData(countriesData);
+        console.log(countriesData);
+      }
+      if (error) {
+        console.log(error);
+      }
+    });
+  }, [dispatch, success, error]);
 
-  useEffect(() => {
-    if (countriesData.length > 0) {
-      setCountryData(countriesData);
-      console.log(countriesData);
-    }
-  }, [countriesData]);
-
-  console.log(countriesData);
 
   return (
     <section className="country-container">
@@ -50,22 +50,6 @@ const Country = () => {
           </div>
         ))
       )}
-      {/* Additional code for the empty country card */}
-      <div className="country-card">
-        <img src="#" alt="" className="country-image" />
-        <div className="country-content">
-          <h3></h3>
-          <p>
-            Population: <span></span>
-          </p>
-          <p>
-            Region: <span></span>
-          </p>
-          <p>
-            Capital: <span></span>
-          </p>
-        </div>
-      </div>
     </section>
   );
 };
