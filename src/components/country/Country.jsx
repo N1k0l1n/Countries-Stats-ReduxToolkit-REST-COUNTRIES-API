@@ -3,16 +3,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { searchByRegion, showAllCountries } from "../../app/features/countries/countriesAction";
+import {
+  searchByRegion,
+  showAllCountries,
+} from "../../app/features/countries/countriesAction";
 // Components
 import Spinner from "../../assets/spinner/Spinner";
 
 const Country = () => {
-  const { countriesData, loading, error, success, region } = useSelector(
-    (state) => state.country
-  );
+  const { countriesData, loading, error, success, region, searchTerm } =
+    useSelector((state) => state.country);
   const dispatch = useDispatch();
- // const [countryData, setCountryData] = useState([]);
+  // const [countryData, setCountryData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const countriesPerPage = 8;
 
@@ -23,8 +25,8 @@ const Country = () => {
       //   console.log(countriesData);
       // }
 
-      if(region){
-        dispatch(searchByRegion(region))
+      if (region) {
+        dispatch(searchByRegion(region));
       }
 
       if (error) {
@@ -32,6 +34,10 @@ const Country = () => {
       }
     });
   }, [dispatch, success, error, region]);
+
+  const data = countriesData.filter((item) =>
+    item.name.common.toLowerCase().includes(searchTerm)
+  );
 
   // Get current countries for pagination
   const indexOfLastCountry = currentPage * countriesPerPage;
@@ -49,7 +55,8 @@ const Country = () => {
       {loading ? (
         <Spinner />
       ) : (
-        currentCountries.map((item, index) => (
+        data.length > 0 &&
+        data.map((item, index) => (
           <Link className="country-card" key={index} to={`/${item.cioc}`}>
             <img
               src={item.flags.png}
