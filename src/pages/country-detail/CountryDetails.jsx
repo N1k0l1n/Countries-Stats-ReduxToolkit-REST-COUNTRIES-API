@@ -11,7 +11,7 @@ import { searchByCode } from "../../app/features/countries/countriesAction";
 import { reset } from "../../app/features/countries/countriesSlice";
 
 const CountryDetails = () => {
-  const { loading, error, countrySearched } = useSelector(
+  const { error, countrySearched } = useSelector(
     (state) => state.country
   );
   const dispatch = useDispatch();
