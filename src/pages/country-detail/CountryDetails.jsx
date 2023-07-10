@@ -2,6 +2,8 @@ import React from "react";
 import "./country-detail.css";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -27,7 +29,7 @@ const CountryDetails = () => {
   return (
     <section className="country-detail-container">
       <Link className="back-button" to="/">
-        <i className="fa-solid fa-arrow-left"></i> Back
+        <FontAwesomeIcon icon={faArrowLeft} /> Back
       </Link>
 
       <div className="country-detail-content">
@@ -44,7 +46,8 @@ const CountryDetails = () => {
               <div className="details">
                 <div className="detail-left">
                   <p>
-                    Offcial Name: <span>{countrySearched[0].name.official}</span>
+                    Offcial Name:{" "}
+                    <span>{countrySearched[0].name.official}</span>
                   </p>
                   <p>
                     Population: <span>{countrySearched[0].population}</span>
@@ -68,19 +71,39 @@ const CountryDetails = () => {
                   <p>
                     Currencies:
                     <span>
-                      
+                      {Object.values(countrySearched[0].currencies)
+                        .map((item) => {
+                          return item.name;
+                        })
+                        .join(", ")}
                     </span>
                   </p>
-
                   <p>
                     Languages:
-                    <span></span>
+                    <span>
+                      {Object.values(countrySearched[0].languages)
+                        .map((item) => {
+                          return item;
+                        })
+                        .join(", ")}
+                    </span>
                   </p>
                 </div>
               </div>
 
               <div className="border">
                 <p>Border Countries:</p>
+                {countrySearched[0].borders ? (
+                  countrySearched[0].borders.map((item, index) => {
+                    return (
+                      <Link className="border-name" to={`/${item}`} key={index}>
+                        <p>{item}</p>
+                      </Link>
+                    );
+                  })
+                ) : (
+                  <span>No Borders</span>
+                )}
               </div>
             </div>
           </>
