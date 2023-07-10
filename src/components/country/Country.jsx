@@ -3,35 +3,40 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { showAllCountries } from "../../app/features/countries/countriesAction";
+import { searchByRegion, showAllCountries } from "../../app/features/countries/countriesAction";
 // Components
 import Spinner from "../../assets/spinner/Spinner";
 
 const Country = () => {
-  const { countriesData, loading, error, success } = useSelector(
+  const { countriesData, loading, error, success, region } = useSelector(
     (state) => state.country
   );
   const dispatch = useDispatch();
-  const [countryData, setCountryData] = useState([]);
+ // const [countryData, setCountryData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const countriesPerPage = 8;
 
   useEffect(() => {
     dispatch(showAllCountries()).then(() => {
-      if (success) {
-        setCountryData(countriesData);
-        console.log(countriesData);
+      // if (success) {
+      //   setCountryData(countriesData);
+      //   console.log(countriesData);
+      // }
+
+      if(region){
+        dispatch(searchByRegion(region))
       }
+
       if (error) {
         console.log(error);
       }
     });
-  }, [dispatch, success, error]);
+  }, [dispatch, success, error, region]);
 
   // Get current countries for pagination
   const indexOfLastCountry = currentPage * countriesPerPage;
   const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
-  const currentCountries = countryData.slice(
+  const currentCountries = countriesData.slice(
     indexOfFirstCountry,
     indexOfLastCountry
   );
@@ -45,7 +50,7 @@ const Country = () => {
         <Spinner />
       ) : (
         currentCountries.map((item, index) => (
-          <Link className="country-card" key={index} to ={`/${item.cioc}`}>
+          <Link className="country-card" key={index} to={`/${item.cioc}`}>
             <img
               src={item.flags.png}
               alt={item.flags.alt}
@@ -70,19 +75,28 @@ const Country = () => {
       {/* Pagination */}
       <div className="pagination-container">
         <button
-          className={`pagination-item previous ${currentPage === 1 ? "disabled" : ""}`}
+          className={`pagination-item previous ${
+            currentPage === 1 ? "disabled" : ""
+          }`}
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
         >
           Previous
         </button>
         <div className="page-indicator">
-          Page {currentPage} of {Math.ceil(countryData.length / countriesPerPage)}
+          Page {currentPage} of{" "}
+          {Math.ceil(countriesData.length / countriesPerPage)}
         </div>
         <button
-          className={`pagination-item next ${currentPage === Math.ceil(countryData.length / countriesPerPage) ? "disabled" : ""}`}
+          className={`pagination-item next ${
+            currentPage === Math.ceil(countriesData.length / countriesPerPage)
+              ? "disabled"
+              : ""
+          }`}
           onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(countryData.length / countriesPerPage)}
+          disabled={
+            currentPage === Math.ceil(countriesData.length / countriesPerPage)
+          }
         >
           Next
         </button>
@@ -90,6 +104,5 @@ const Country = () => {
     </section>
   );
 };
-
 
 export default Country;

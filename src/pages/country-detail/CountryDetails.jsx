@@ -1,6 +1,6 @@
 import React from "react";
 import "./country-detail.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -24,6 +24,9 @@ const CountryDetails = () => {
     if (error) {
       console.log(error);
     }
+    return () => {
+      dispatch(reset());
+    };
   }, [dispatch, code, error]);
 
   return (

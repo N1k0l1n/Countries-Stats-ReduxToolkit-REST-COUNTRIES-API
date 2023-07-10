@@ -11,6 +11,7 @@ const Spinner = () => {
         className="d-block m-auto"
         style={{width:'200px'}}
         />
+        <p>If this keeps loading, try again later</p>
       </div>
     </>
   )
