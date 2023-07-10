@@ -22,8 +22,8 @@
 }
 
 .main-container.dark .country-card {
-  background-color: var(--dark-blue-elements);
-  color: var(--color-white);
+  background-color: #333333;
+  color: #ffffff;
   box-shadow: 5px 5px 10px 0px #1a1717;
 }
 
@@ -75,8 +75,8 @@
 }
 
 .pagination-item.active {
-  background-color: var(--dark-blue-elements);
-  color: var(--color-white);
+  background-color: #222222;
+  color: #ffffff;
 }
 
 .disabled {

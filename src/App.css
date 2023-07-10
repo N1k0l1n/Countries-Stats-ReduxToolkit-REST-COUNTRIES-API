@@ -1,3 +1,8 @@
+:root {
+  --light-mode-bg: #f4f4f4; /* Placeholder for light mode background color */
+  --dark-mode-bg: #333333; /* Placeholder for dark mode background color */
+}
+
 .main-container {
   height: 100%;
   width: 100%;
